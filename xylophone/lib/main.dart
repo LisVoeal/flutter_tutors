@@ -5,18 +5,20 @@ void main() => runApp(Xylophone());
 
 class Xylophone extends StatelessWidget {
   final player = AudioPlayer();
-  void playSound(int soundNumber) {
+
+  void playSound(soundNumber) {
     player.play(DeviceFileSource('/assets/note$soundNumber.wav'));
   }
 
-  Expanded buildButton(int soundNumber, Color color) {
+  Expanded playButton(Color buttonColor, int number) {
     return Expanded(
       child: TextButton(
-        child: Container(color: color),
-        onPressed: () {
-          playSound(soundNumber);
-        },
-      ),
+          child: Container(
+            color: buttonColor,
+          ),
+          onPressed: () {
+            playSound(number);
+          }),
     );
   }
 
@@ -24,18 +26,16 @@ class Xylophone extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: SafeArea(
-          child: Column(
-            children: [
-              buildButton(1, Colors.red),
-              buildButton(2, Colors.orange),
-              buildButton(3, Colors.yellow),
-              buildButton(4, Colors.green),
-              buildButton(5, Colors.teal),
-              buildButton(6, Colors.blue),
-              buildButton(7, Colors.purple),
-            ],
-          ),
+        body: Column(
+          children: [
+            playButton(Colors.red, 1),
+            playButton(Colors.orange, 2),
+            playButton(Colors.yellow, 3),
+            playButton(Colors.green, 4),
+            playButton(Colors.teal, 5),
+            playButton(Colors.blue, 6),
+            playButton(Colors.purple, 7),
+          ],
         ),
       ),
     );
