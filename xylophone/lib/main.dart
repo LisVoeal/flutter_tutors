@@ -6,36 +6,38 @@ void main() => runApp(Xylophone());
 class Xylophone extends StatelessWidget {
   final player = AudioPlayer();
 
-  void playSound(soundNumber) {
-    player.play(DeviceFileSource('/assets/note$soundNumber.wav'));
+  void playSound(int soundNumber) {
+    player.play(DeviceFileSource("assets/note$soundNumber.wav"));
   }
 
-  Expanded playButton(Color buttonColor, int number) {
+  Expanded makeButton(Color color, int sound) {
     return Expanded(
-      child: TextButton(
-          child: Container(
-            color: buttonColor,
-          ),
-          onPressed: () {
-            playSound(number);
-          }),
-    );
+        child: TextButton(
+      child: Container(
+        color: color,
+      ),
+      onPressed: (() {
+        playSound(sound);
+      }),
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Column(
-          children: [
-            playButton(Colors.red, 1),
-            playButton(Colors.orange, 2),
-            playButton(Colors.yellow, 3),
-            playButton(Colors.green, 4),
-            playButton(Colors.teal, 5),
-            playButton(Colors.blue, 6),
-            playButton(Colors.purple, 7),
-          ],
+        body: SafeArea(
+          child: Column(
+            children: [
+              makeButton(Colors.red, 1),
+              makeButton(Colors.orange, 2),
+              makeButton(Colors.yellow, 3),
+              makeButton(Colors.green, 4),
+              makeButton(Colors.teal, 5),
+              makeButton(Colors.blue, 6),
+              makeButton(Colors.purple, 7),
+            ],
+          ),
         ),
       ),
     );
