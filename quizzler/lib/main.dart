@@ -1,4 +1,3 @@
-import "button.dart";
 import "package:flutter/material.dart";
 import "quiz_brain.dart";
 
@@ -10,62 +9,78 @@ class Quizzler extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.black,
-        body: QuizApp(),
+        body: QuizzlerApp(),
       ),
     );
   }
 }
 
-class QuizApp extends StatefulWidget {
-  const QuizApp({Key key}) : super(key: key);
+class QuizzlerApp extends StatefulWidget {
+  const QuizzlerApp({Key key}) : super(key: key);
 
   @override
-  State<QuizApp> createState() => _QuizAppState();
+  State<QuizzlerApp> createState() => _QuizzlerAppState();
 }
 
-class _QuizAppState extends State<QuizApp> {
-  QuizBrain quizBrain = QuizBrain();
+class _QuizzlerAppState extends State<QuizzlerApp> {
+  QuizBrain quiz = QuizBrain();
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Expanded(
           flex: 5,
           child: Center(
             child: Text(
-              quizBrain.getQuizQuestion(),
-              style: TextStyle(color: Colors.white, fontSize: 40.0),
+              quiz.getQuizQuestion(),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 40.0,
+              ),
             ),
           ),
         ),
         Expanded(
-          child: QuizButton(
-            buttonText: "True",
-            buttonColor: Colors.green,
-            buttonAction: () {
+          child: TextButton(
+            onPressed: (() {
               setState(() {
-                quizBrain.checkAnswer(true);
-                quizBrain.nextQuestion();
+                quiz.checkAnswer(true);
               });
-            },
+            }),
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.green,
+            ),
+            child: Text(
+              "True",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 40.0,
+              ),
+            ),
           ),
         ),
         Expanded(
-          child: QuizButton(
-            buttonText: "False",
-            buttonColor: Colors.red,
-            buttonAction: () {
+          child: TextButton(
+            onPressed: (() {
               setState(() {
-                quizBrain.checkAnswer(false);
-                quizBrain.nextQuestion();
+                quiz.checkAnswer(false);
               });
-            },
+            }),
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.red,
+            ),
+            child: Text(
+              "False",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 40.0,
+              ),
+            ),
           ),
         ),
-        Row(
-          children: quizBrain.getQuizScore(),
-        ),
+        Row(children: quiz.results),
       ],
     );
   }

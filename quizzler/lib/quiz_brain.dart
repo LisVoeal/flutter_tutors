@@ -2,94 +2,78 @@ import "package:flutter/material.dart";
 import "question.dart";
 
 class QuizBrain {
-  List<Question> _quizQuestions = [
+  int _quizIndex = 0;
+
+  List<Question> _quizList = [
     Question(
-        quizQuestion: 'Some cats are actually allergic to humans',
-        quizAnswer: true),
+        question: 'Some cats are actually allergic to humans', answer: true),
     Question(
-        quizQuestion: 'You can lead a cow down stairs but not up stairs.',
-        quizAnswer: false),
+        question: 'You can lead a cow down stairs but not up stairs.',
+        answer: false),
     Question(
-        quizQuestion:
-            'Approximately one quarter of human bones are in the feet.',
-        quizAnswer: true),
-    Question(quizQuestion: 'A slug\'s blood is green.', quizAnswer: true),
+        question: 'Approximately one quarter of human bones are in the feet.',
+        answer: true),
+    Question(question: 'A slug\'s blood is green.', answer: true),
     Question(
-        quizQuestion: 'Buzz Aldrin\'s mother\'s maiden name was \"Moon\".',
-        quizAnswer: true),
+        question: 'Buzz Aldrin\'s mother\'s maiden name was \"Moon\".',
+        answer: true),
     Question(
-        quizQuestion: 'It is illegal to pee in the Ocean in Portugal.',
-        quizAnswer: true),
+        question: 'It is illegal to pee in the Ocean in Portugal.',
+        answer: true),
     Question(
-        quizQuestion:
+        question:
             'No piece of square dry paper can be folded in half more than 7 times.',
-        quizAnswer: false),
+        answer: false),
     Question(
-        quizQuestion:
+        question:
             'In London, UK, if you happen to die in the House of Parliament, you are technically entitled to a state funeral, because the building is considered too sacred a place.',
-        quizAnswer: true),
+        answer: true),
     Question(
-        quizQuestion:
+        question:
             'The loudest sound produced by any animal is 188 decibels. That animal is the African Elephant.',
-        quizAnswer: false),
+        answer: false),
     Question(
-        quizQuestion:
+        question:
             'The total surface area of two human lungs is approximately 70 square metres.',
-        quizAnswer: true),
+        answer: true),
     Question(
-        quizQuestion: 'Google was originally called \"Backrub\".',
-        quizAnswer: true),
+        question: 'Google was originally called \"Backrub\".', answer: true),
     Question(
-        quizQuestion:
+        question:
             'Chocolate affects a dog\'s heart and nervous system; a few ounces are enough to kill a small dog.',
-        quizAnswer: true),
+        answer: true),
     Question(
-        quizQuestion:
+        question:
             'In West Virginia, USA, if you accidentally hit an animal with your car, you are free to take it home to eat.',
-        quizAnswer: true),
+        answer: true),
   ];
 
-  int _questionIndex = 0;
+  List<Icon> results = [];
 
-  int getQuestionNumber() {
-    return _questionIndex;
-  }
-
-  String getQuizQuestion() {
-    return _quizQuestions[_questionIndex].quizQuestion;
-  }
-
-  bool getQuizAnswer() {
-    return _quizQuestions[_questionIndex].quizAnswer;
-  }
-
-  void nextQuestion() {
-    if (_questionIndex < _quizQuestions.length - 1) {
-      _questionIndex++;
-    }
-  }
-
-  bool checkAnswer(bool pressedButton) {
-    if (pressedButton == _quizQuestions[_questionIndex].quizAnswer) {
-      _quizScore.add(rightAnswerIcon());
-      return true;
-    } else {
-      _quizScore.add(wrongAnswerIcon());
-      return false;
-    }
-  }
-
-  List<Icon> getQuizScore() {
-    return _quizScore;
-  }
-
-  Icon wrongAnswerIcon() {
-    return Icon(Icons.close, color: Colors.red);
-  }
-
-  Icon rightAnswerIcon() {
+  Icon iconRight() {
     return Icon(Icons.check, color: Colors.green);
   }
 
-  List<Icon> _quizScore = [];
+  Icon iconFalse() {
+    return Icon(Icons.close, color: Colors.red);
+  }
+
+  String getQuizQuestion() {
+    return _quizList[_quizIndex].question;
+  }
+
+  void nextQuestion() {
+    if (_quizIndex < _quizList.length - 1) {
+      _quizIndex++;
+    }
+  }
+
+  void checkAnswer(bool answer) {
+    if (answer == _quizList[_quizIndex].answer) {
+      results.add(iconRight());
+    } else {
+      results.add(iconFalse());
+    }
+    nextQuestion();
+  }
 }
